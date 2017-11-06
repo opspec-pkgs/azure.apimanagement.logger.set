@@ -1,0 +1,109 @@
+name: github.com/opspec-pkgs/azure.apimanagement.logger.create
+description: create azure api management logger
+inputs:
+  subscriptionId:
+    string:
+      constraints: { minLength: 1 }
+      description: id of azure subscription
+  loginId:
+    string:
+      constraints: { minLength: 1 }
+      description: id of user, service principal, or app to login with
+  loginSecret:
+    string:
+      constraints: { minLength: 1 }
+      description: secret of user, service principal, or app to login with
+      isSecret: true
+  loginTenantId:
+    string:
+      constraints: { minLength: 1 }
+      description: tenant id of user, service principal, or app to login with
+  loginType:
+    string:
+      constraints: { enum: [user, sp]}
+      description: type of login; 'user' (default) or 'sp' for service principal
+      default: user
+  resourceGroup:
+    string:
+      constraints: { minLength: 1 }
+      description: name of azure resource group
+  apiManagementServiceName:
+    string:
+      constraints: { minLength: 1 }
+      description: name of the api management service
+  apiCredentialsIdentifier:
+    string:
+      constraints: { minLength: 1 }
+      description: the identifier for API management under security > credentials
+      default: integration
+  apiCredentialsKey:
+    string:
+      constraints: { minLength: 1 }
+      description: api management primary or secondary key under security > credentials
+      isSecret: true
+  accessTokenMinutesValid:
+    number:
+      constraints: { minimum: 1, format: integer }
+      description: the number of minutes the access token is valid
+      default: 60
+  loggerName: 
+    string:
+      constraints: { minLength: 1 }
+      description: name of logger
+  loggerDescription: 
+    string:
+      constraints: { minLength: 1 }
+      description: description of logger
+  eventHubNamespaceName: 
+    string:
+      constraints: { minLength: 1 }
+      description: event hub namespace used by logger
+  eventHubName:
+    string:
+      constraints: { minLength: 1 }
+      description: event hub used by logger
+  eventHubAuthRule: 
+    string:
+      constraints: { minLength: 1 }
+      description: event hub authorization rule to use in connection string
+version: 1.0.0
+run:
+  serial:
+    - op:
+        pkg: { ref: github.com/opspec-pkgs/azure.apimanagement.sas-token.generate#1.0.0 }
+        inputs: 
+          id: $(apiCredentialsIdentifier)
+          key: $(apiCredentialsKey)
+          minutesValid: $(accessTokenMinutesValid)
+        outputs:
+          sasToken:
+    - op:
+        pkg: { ref: github.com/opspec-pkgs/azure.eventhub.namespace.connectionstring.get#2.0.0 }
+        inputs: 
+          subscriptionId:
+          loginId:
+          loginSecret:
+          loginTenantId:
+          loginType:
+          authRule: $(eventHubAuthRule)
+          name: $(eventHubName)
+          namespace: $(eventHubNamespaceName)
+          resourceGroup:
+        outputs:
+          eventHubConnectionString: connectionString
+    - container:
+        image: { ref: 'opspecpkgs/azure.apimanagement.logger.create:1.0.0' }
+        cmd: [ node, /index.js ]
+        files: { /index.js }
+        envVars:
+          subscriptionId:
+          loginId:
+          loginSecret:
+          loginTenantId:
+          loginType:
+          apiManagementServiceName:
+          sasToken:
+          loggerName:
+          loggerDescription:
+          eventHubNamespaceName:
+          eventHubConnectionString:
