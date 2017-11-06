@@ -28,7 +28,7 @@ opctl run github.com/opspec-pkgs/azure.apimanagement.logger.create#1.0.0
 
 ```yaml
 op:
-  pkg: { ref: github.com/opspecpkgs/azure.apimanagement.logger.create:1.0.0 }
+  pkg: { ref: github.com/opspec-pkgs/azure.apimanagement.logger.create#1.0.0 }
   inputs: 
     subscriptionId:
     loginId:
