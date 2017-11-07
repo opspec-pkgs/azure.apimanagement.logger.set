@@ -43,6 +43,49 @@ const createLogger = async () => {
     });
 };
 
+const updateLogger = async () => {
+    
+        const url = new URL(
+            `https://${process.env.apiManagementServiceName}.management.azure-api.net/` +
+            `loggers/${process.env.loggerName}` +
+            `?api-version=2014-02-14-preview`);
+        
+        const headers = {};
+        headers['Authorization'] = `${process.env.sasToken}`;
+        headers['Content-Type'] = 'application/json';
+        headers['If-Match'] = '*';
+    
+        const reqBody = {
+            "type": "azureEventHub",
+            "description": `${process.env.loggerDescription}`, 
+            "credentials": {
+                  "name": `${process.env.eventHubNamespaceName}`,
+                  "connectionString": `${process.env.eventHubConnectionString}`
+            }
+        };
+    
+        let options = {
+            method: 'PATCH',
+            url: url.href,
+            headers,
+            data: reqBody
+        };
+    
+        const result = await axios(options)
+        .then((response) => {
+            console.log('updating logger successful')
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log('Error: ', error.response.statusText);
+            } else if (error.request) {
+                console.log('Error: ', error.request);
+            } else {
+                console.log('Error: ', error.message);
+            }
+        });
+    };
+
 const checkForLogger = async () => {
     console.log('checking if logger exists');
 
@@ -62,7 +105,8 @@ const checkForLogger = async () => {
 
     const result = await axios(options)
     .then((response) => {
-        console.log('logger found');
+        console.log('logger found, updating logger');
+        updateLogger();
     })
     .catch((error) => {
         if (error.response.status === 404) {
