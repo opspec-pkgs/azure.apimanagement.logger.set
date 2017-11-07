@@ -5,4 +5,8 @@ All notable changes will be documented in this file in accordance with
 
 ## \[Unreleased]
 
+## \[1.0.1] - 2017-11-07
+
+update pkg to update or create instead of only create
+
 ## \[1.0.0] - 2017-11-02

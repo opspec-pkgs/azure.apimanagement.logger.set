@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/opspec-pkgs/azure.apimanagement.logger.create.svg?branch=master)](https://travis-ci.org/opspec-pkgs/azure.apimanagement.logger.create)
+[![Build Status](https://travis-ci.org/opspec-pkgs/azure.apimanagement.logger.set.svg?branch=master)](https://travis-ci.org/opspec-pkgs/azure.apimanagement.logger.set)
 
 # Problem statement
 
-create an azure api management logger
+set an azure api management logger
 
 # Format
 
@@ -15,20 +15,20 @@ format
 ## install
 
 ```shell
-opctl pkg install github.com/opspec-pkgs/azure.apimanagement.logger.create#1.0.0
+opctl pkg install github.com/opspec-pkgs/azure.apimanagement.logger.set#1.0.1
 ```
 
 ## run
 
 ```
-opctl run github.com/opspec-pkgs/azure.apimanagement.logger.create#1.0.0
+opctl run github.com/opspec-pkgs/azure.apimanagement.logger.set#1.0.1
 ```
 
 ## compose
 
 ```yaml
 op:
-  pkg: { ref: github.com/opspec-pkgs/azure.apimanagement.logger.create#1.0.0 }
+  pkg: { ref: github.com/opspec-pkgs/azure.apimanagement.logger.set#1.0.1 }
   inputs: 
     subscriptionId:
     loginId:
@@ -54,7 +54,7 @@ op:
 join us on
 [![Slack](https://opspec-slackin.herokuapp.com/badge.svg)](https://opspec-slackin.herokuapp.com/)
 or
-[open an issue](https://github.com/opspec-pkgs/azure.apimanagement.logger.create/issues)
+[open an issue](https://github.com/opspec-pkgs/azure.apimanagement.logger.set/issues)
 
 # Releases
 
