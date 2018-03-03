@@ -5,6 +5,12 @@ All notable changes will be documented in this file in accordance with
 
 ## \[Unreleased]
 
+## \[1.0.2] - 2018-03-03
+
+### Changed
+
+- sasToken no longer written to stdOut
+
 ## \[1.0.1] - 2017-11-07
 
 update pkg to update or create instead of only create
