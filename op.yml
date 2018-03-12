@@ -70,7 +70,7 @@ version: 1.1.0
 run:
   serial:
     - op:
-        pkg: { ref: github.com/opspec-pkgs/azure.apimanagement.sas-token.generate#1.0.1 }
+        pkg: { ref: github.com/opspec-pkgs/azure.apimanagement.sas-token.generate#1.1.0 }
         inputs: 
           id: $(apiCredentialsIdentifier)
           key: $(apiCredentialsKey)
@@ -78,7 +78,7 @@ run:
         outputs:
           sasToken:
     - op:
-        pkg: { ref: github.com/opspec-pkgs/azure.eventhub.namespace.connectionstring.get#2.0.0 }
+        pkg: { ref: github.com/opspec-pkgs/azure.eventhub.namespace.connectionstring.get#2.1.0 }
         inputs: 
           subscriptionId:
           loginId:
